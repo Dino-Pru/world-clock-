@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Clock</title>
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Shadows Into Light', cursive;
+            background-color: #eaf6f6; /* Light background */
+            text-align: center;
+            color: #f76b8a; /* Pink for primary text */
+        }
+        h1 {
+            font-size: 3rem;
+            color: #66bfbf; /* Teal for the heading */
+            margin-top: 20px;
+        }
+        select {
+            padding: 10px;
+            margin: 20px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            border: 2px solid #66bfbf; /* Teal border */
+            background-color: #fcfefe; /* Very light background for select */
+            color: #333;
+        }
+        .clock {
+            margin: 30px auto;
+            padding: 20px;
+            background: #fcfefe; /* Very light background for clock container */
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .city-name {
+            font-size: 2rem;
+            color: #66bfbf; /* Teal for city name */
+        }
+        .time {
+            font-size: 3rem;
+            color: #000; /* Black for time */
+        }
+        .date {
+            font-size: 1.2rem;
+            color: #f76b8a; /* Pink for date */
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 1rem;
+            color: #333;
+        }
+        footer strong {
+            color: #66bfbf; /* Teal color for strong text */
+        }
+        footer a {
+            color: #f76b8a; /* Pink color for links */
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>✻ World Clock ✻</h1>
+
+    <select id="citySelect" onchange="updateTime()">
+        <option value="Lisbon, Europe/Lisbon">PT Lisbon</option>
+        <option value="Tokyo, Asia/Tokyo">JP Tokyo</option>
+        <option value="New York, America/New_York">US New York</option>
+        <option value="London, Europe/London">UK London</option>
+        <option value="Sydney, Australia/Sydney">AU Sydney</option>
+    </select>
+
+    <div class="clock" id="clock">
+        <div class="city-name" id="cityName">PT Lisbon</div>
+        <div class="date" id="currentDate">September 24th 2024</div>
+        <div class="time" id="currentTime">3:48:45 PM</div>
+    </div>
+
+    <footer>
+        This project was coded with ❤️ by <strong>Dino M</strong> and is
+        <a href="https://github.com/Dino-Pru" target="_blank">
+          open sourced on GitHub
+        </a>
+    </footer>
+
+    <script>
+        function updateTime() {
+            const citySelect = document.getElementById('citySelect');
+            const cityInfo = citySelect.value.split(',');
+            const cityName = cityInfo[0];
+            const timeZone = cityInfo[1].trim();
+            
+            const now = new Date();
+            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: timeZone, hour12: true };
+            const dateOptions = { year: 'numeric', month: 'long', day: 'numeric', timeZone: timeZone };
+            
+            document.getElementById('cityName').textContent = cityName;
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', dateOptions);
+            document.getElementById('currentTime').textContent = new Date().toLocaleTimeString('en-US', timeOptions);
+        }
+
+        // Update clock every second
+        setInterval(updateTime, 1000);
+        updateTime(); // Initial call to display time immediately
+    </script>
+</body>
+</html>
